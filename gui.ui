@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QGroupBox" name="ConsoleGroupBox">
+      <property name="styleSheet">
+       <string notr="true">	font-size: 12pt;
+	font-family: Arial, sans-serif;</string>
+      </property>
+      <property name="title">
+       <string>Console</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLabel" name="programFileLabel">
+             <property name="text">
+              <string>Select Your Hex/Bin File</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="flashStatusLabel">
+             <property name="text">
+              <string>Flash Status : None</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QComboBox" name="programFileComboBox"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="flashButton">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    border-radius: 10px; /* Adjust the radius to make the corners more or less rounded */
+    background-color: #3498db; /* Button's normal background color */
+    color: white; /* Button's text color */
+    padding: 5px 5px; /* Adjust padding as needed */
+}
+
+/* Hover state */
+QPushButton:hover {
+    background-color: #2980b9; /* Change background color on hover */
+}
+
+/* Active state (when button is clicked) */
+QPushButton:pressed {
+    background-color: #2070a0; /* Change background color when clicked */
+}</string>
+           </property>
+           <property name="text">
+            <string>Flash Program</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="devicesLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Devices for Label Printing</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTableView" name="devicesTableView">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="hotKeyLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Press Enter : Add Devices</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QPushButton" name="addDeviceButton">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    border-radius: 10px; /* Adjust the radius to make the corners more or less rounded */
+    background-color: #3498db; /* Button's normal background color */
+    color: white; /* Button's text color */
+    padding: 5px 0px; /* Adjust padding as needed */
+}
+
+/* Hover state */
+QPushButton:hover {
+    background-color: #2980b9; /* Change background color on hover */
+}
+
+/* Active state (when button is clicked) */
+QPushButton:pressed {
+    background-color: #2070a0; /* Change background color when clicked */
+}</string>
+           </property>
+           <property name="text">
+            <string>Add Devices</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="printNowButton">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    border-radius: 10px; /* Adjust the radius to make the corners more or less rounded */
+    background-color: #3498db; /* Button's normal background color */
+    color: white; /* Button's text color */
+    padding: 5px 0px; /* Adjust padding as needed */
+}
+
+/* Hover state */
+QPushButton:hover {
+    background-color: #2980b9; /* Change background color on hover */
+}
+
+/* Active state (when button is clicked) */
+QPushButton:pressed {
+    background-color: #2070a0; /* Change background color when clicked */
+}</string>
+           </property>
+           <property name="text">
+            <string>Print Now</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="clearListButton">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    border-radius: 10px; /* Adjust the radius to make the corners more or less rounded */
+    background-color: #3498db; /* Button's normal background color */
+    color: white; /* Button's text color */
+    padding: 5px 0px; /* Adjust padding as needed */
+}
+
+/* Hover state */
+QPushButton:hover {
+    background-color: #2980b9; /* Change background color on hover */
+}
+
+/* Active state (when button is clicked) */
+QPushButton:pressed {
+    background-color: #2070a0; /* Change background color when clicked */
+}</string>
+           </property>
+           <property name="text">
+            <string>Clear</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
