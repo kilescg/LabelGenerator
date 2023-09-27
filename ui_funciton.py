@@ -43,13 +43,14 @@ def AddDevice_Event(ui):
     global mac_id_list
     global header
     jlink.Power_On()
-    mac_id = [jlink.MAC_ID_Check()]
+    mac_id = jlink.MAC_ID_Check()
     is_mac_id_duplicated = mac_id in mac_id_list
-    if (mac_id == ['']) | (is_mac_id_duplicated):
+    if (mac_id == '') | (is_mac_id_duplicated):
         return
     mac_id_list.append(mac_id)
+    log.LogMacID(mac_id[0], "database/devicesLog.csv")
     if len(mac_id_list) == 3:
-        log.WriteCsv(mac_id_list)
+        log.WriteCsv(['macID'], mac_id_list, "database/devices.csv")
         mac_id_list = []
     PopulateTableView(ui.devicesTableView, header, mac_id_list)
 
@@ -59,7 +60,7 @@ def ClearList_Event(ui):
     
 def PrintNow_Event(ui):
     # todo
-    log.WriteCsv(mac_id_list)
+    log.WriteCsv(['macID'], mac_id_list, "database/devices.csv")
     mac_id_list = []
     PopulateTableView(ui.devicesTableView, header, mac_id_list)
 

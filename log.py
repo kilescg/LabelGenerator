@@ -1,10 +1,7 @@
 import csv
 import os
 
-file_path = "database/devices.csv"
-fieldnames = ['macID']
-
-def WriteCsv(data_list):
+def WriteCsv(fieldnames, data_list, file_path):
     # Check if the output file already exists and delete it
     if os.path.exists(file_path):
         print("deleting csv")
@@ -27,3 +24,30 @@ def WriteCsv(data_list):
                 writer.writerow(data_dict)
             else:
                 print(f"Skipping invalid data: {inner_list}")
+
+def LogMacID(mac_id, file_path):
+    # Check if the CSV file exists
+    file_exists = os.path.isfile(file_path)
+
+    # Read existing data to check for duplicates
+    existing_data = set()
+    if file_exists:
+        with open(file_path, 'r', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                existing_mac_id = row.get('macID')
+                if existing_mac_id:
+                    existing_data.add(existing_mac_id)
+
+    # Open the CSV file in append mode (or create a new one)
+    with open(file_path, 'a', newline='') as csvfile:
+        fieldnames = ['macID']  # Specify the header field
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        # If the file does not exist, write the header
+        if not file_exists:
+            writer.writeheader()
+
+        # Check if the macID already exists, and only write if it's not a duplicate
+        if mac_id not in existing_data:
+            writer.writerow({'macID': mac_id})
