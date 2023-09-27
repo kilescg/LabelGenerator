@@ -8,8 +8,8 @@ def ConnectUiWithEvent(ui):
     ui.flashButton.clicked.connect(lambda : Flash_Event(ui)) #done
     
     ui.addDeviceButton.clicked.connect(lambda : AddDevice_Event(ui))
-    ui.printNowButton.clicked.connect(lambda : Flash_Event(ui))
-    ui.clearListButton.clicked.connect(lambda : Flash_Event(ui))
+    ui.printNowButton.clicked.connect(lambda : PrintNow_Event(ui))
+    ui.clearListButton.clicked.connect(lambda : ClearList_Event(ui))
 
 def ComboBoxInitialize(ui):
     ProgramFileComboBoxClick_Event(ui)

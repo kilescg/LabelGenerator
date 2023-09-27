@@ -55,10 +55,12 @@ def AddDevice_Event(ui):
     PopulateTableView(ui.devicesTableView, header, mac_id_list)
 
 def ClearList_Event(ui):
+    global mac_id_list
     mac_id_list = []
     PopulateTableView(ui.devicesTableView, header, mac_id_list)
     
 def PrintNow_Event(ui):
+    global mac_id_list
     # todo
     log.WriteCsv(['macID'], mac_id_list, "database/devices.csv")
     mac_id_list = []
