@@ -43,9 +43,9 @@ def AddDevice_Event(ui):
     global mac_id_list
     global header
     jlink.Power_On()
-    mac_id = jlink.MAC_ID_Check()
+    mac_id = [jlink.MAC_ID_Check()]
     is_mac_id_duplicated = mac_id in mac_id_list
-    if (mac_id == '') | (is_mac_id_duplicated):
+    if (mac_id == ['']) | (is_mac_id_duplicated):
         return
     mac_id_list.append(mac_id)
     if len(mac_id_list) == 3:

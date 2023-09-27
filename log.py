@@ -2,7 +2,7 @@ import csv
 import os
 
 file_path = "database/devices.csv"
-fieldnames = ['macID', 'deviceType', 'deviceName', 'Location', 'Controller Type']
+fieldnames = ['macID']
 
 def WriteCsv(data_list):
     # Check if the output file already exists and delete it
