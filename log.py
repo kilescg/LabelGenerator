@@ -1,5 +1,6 @@
 import csv
 import os
+from datetime import datetime
 
 def WriteCsv(fieldnames, data_list, file_path):
     # Check if the output file already exists and delete it
@@ -27,6 +28,8 @@ def WriteCsv(fieldnames, data_list, file_path):
 
 def LogMacID(mac_id, file_path):
     # Check if the CSV file exists
+    now = datetime.now()
+    dt_string = now.strftime("%Y-%m-%d,%H:%M:%S")
     file_exists = os.path.isfile(file_path)
 
     # Read existing data to check for duplicates
@@ -41,7 +44,7 @@ def LogMacID(mac_id, file_path):
 
     # Open the CSV file in append mode (or create a new one)
     with open(file_path, 'a', newline='') as csvfile:
-        fieldnames = ['macID']  # Specify the header field
+        fieldnames = ['macID','timestamp']  # Specify the header field
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         # If the file does not exist, write the header
@@ -50,4 +53,4 @@ def LogMacID(mac_id, file_path):
 
         # Check if the macID already exists, and only write if it's not a duplicate
         if mac_id not in existing_data:
-            writer.writerow({'macID': mac_id})
+            writer.writerow({'macID': mac_id, 'timestamp': dt_string})
