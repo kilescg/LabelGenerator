@@ -53,7 +53,6 @@ def AddDevice_Event(ui):
     global header
     jlink.Power_On()
     mac_id = [jlink.MAC_ID_Check()]
-    global mac_id_test
     is_mac_id_duplicated = mac_id in mac_id_list
     if (mac_id == ['']):
         ui.addDeviceStatusLabel.setText(
@@ -69,12 +68,12 @@ def AddDevice_Event(ui):
     mac_id_list.append(mac_id)
     log.LogMacID(mac_id[0], "database/devicesLog.csv")
     note = ui.noteLineEdit.text()
-    data = (mac_id, 'good', note, '0', get_date_time())
-    log.insert_device_incoming()
+    data = (mac_id[0], 'good', note, '0', get_date_time())
+    log.insert_device_incoming(data)
     if len(mac_id_list) == 3:
         log.WriteCsv(['macID'], mac_id_list, "database/devices.csv")
         for mac in mac_id_list:
-            log.update_print_label_by_mac_id(mac)
+            log.update_print_label_by_mac_id(mac[0])
         mac_id_list = []
     PopulateTableView(ui.devicesTableView, header, mac_id_list)
 

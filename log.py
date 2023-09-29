@@ -10,9 +10,7 @@ db_path = "database/DB_sdeautodeploy.db"
 def WriteCsv(fieldnames, data_list, file_path):
     # Check if the output file already exists and delete it
     if os.path.exists(file_path):
-        print("deleting csv")
         os.remove(file_path)
-    print("writing new csv")
 
     # Open the CSV file for writing
     with open(file_path, 'w', newline='') as csvfile:
@@ -60,7 +58,7 @@ def LogMacID(mac_id, file_path):
             writer.writerow({'macID': mac_id, 'timestamp': dt_string})
 
 
-def insert_device_incoming(self, device_incoming):
+def insert_device_incoming(device_incoming):
     global db_path
     conn = sqlite3.connect(db_path)
     sql = ''' INSERT INTO device_incoming(mac_id,status,note,print_label,datetime) VALUES(?,?,?,?,?)'''
@@ -72,14 +70,10 @@ def insert_device_incoming(self, device_incoming):
 
 
 def update_print_label_by_mac_id(mac_id):
-    try:
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
 
-        cursor.execute(
-            "UPDATE device_incoming SET print_label = '1' WHERE mac_id = ?", (mac_id,))
-    except sqlite3.Error as e:
-        print(f"SQLite error: {e}")
-
-    finally:
-        conn.close()
+    cursor.execute(
+        "UPDATE device_incoming SET print_label = '1' WHERE mac_id = ?", (mac_id))
+    conn.commit()
+    conn.close()
