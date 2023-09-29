@@ -1,8 +1,9 @@
 import os
 import threading
-from PyQt5.QtGui import QStandardItemModel, QStandardItem
 import jlink
 import log
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
+from utils import *
 
 mac_id_list = []
 header = ["macID"]
@@ -67,8 +68,13 @@ def AddDevice_Event(ui):
             "<span style=\"color:green\">Okay</span></p>")
     mac_id_list.append(mac_id)
     log.LogMacID(mac_id[0], "database/devicesLog.csv")
+    note = ui.noteLineEdit.text()
+    data = (mac_id, 'good', note, '0', get_date_time())
+    log.insert_device_incoming()
     if len(mac_id_list) == 3:
         log.WriteCsv(['macID'], mac_id_list, "database/devices.csv")
+        for mac in mac_id_list:
+            log.update_print_label_by_mac_id(mac)
         mac_id_list = []
     PopulateTableView(ui.devicesTableView, header, mac_id_list)
 
@@ -83,6 +89,8 @@ def PrintNow_Event(ui):
     global mac_id_list
     # todo
     log.WriteCsv(['macID'], mac_id_list, "database/devices.csv")
+    for mac in mac_id_list:
+        log.update_print_label_by_mac_id(mac)
     mac_id_list = []
     PopulateTableView(ui.devicesTableView, header, mac_id_list)
 

@@ -1,6 +1,11 @@
 import csv
 import os
+import sqlite3
 from datetime import datetime
+from utils import *
+
+db_path = "database/DB_sdeautodeploy.db"
+
 
 def WriteCsv(fieldnames, data_list, file_path):
     # Check if the output file already exists and delete it
@@ -8,7 +13,6 @@ def WriteCsv(fieldnames, data_list, file_path):
         print("deleting csv")
         os.remove(file_path)
     print("writing new csv")
-
 
     # Open the CSV file for writing
     with open(file_path, 'w', newline='') as csvfile:
@@ -26,10 +30,10 @@ def WriteCsv(fieldnames, data_list, file_path):
             else:
                 print(f"Skipping invalid data: {inner_list}")
 
+
 def LogMacID(mac_id, file_path):
     # Check if the CSV file exists
-    now = datetime.now()
-    dt_string = now.strftime("%Y-%m-%d,%H:%M:%S")
+    dt_string = get_date_time()
     file_exists = os.path.isfile(file_path)
 
     # Read existing data to check for duplicates
@@ -44,7 +48,7 @@ def LogMacID(mac_id, file_path):
 
     # Open the CSV file in append mode (or create a new one)
     with open(file_path, 'a', newline='') as csvfile:
-        fieldnames = ['macID','timestamp']  # Specify the header field
+        fieldnames = ['macID', 'timestamp']  # Specify the header field
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         # If the file does not exist, write the header
@@ -54,3 +58,28 @@ def LogMacID(mac_id, file_path):
         # Check if the macID already exists, and only write if it's not a duplicate
         if mac_id not in existing_data:
             writer.writerow({'macID': mac_id, 'timestamp': dt_string})
+
+
+def insert_device_incoming(self, device_incoming):
+    global db_path
+    conn = sqlite3.connect(db_path)
+    sql = ''' INSERT INTO device_incoming(mac_id,status,note,print_label,datetime) VALUES(?,?,?,?,?)'''
+    cur = conn.cursor()
+    cur.execute(sql, device_incoming)
+    conn.commit()
+    conn.close()
+    return cur.lastrowid
+
+
+def update_print_label_by_mac_id(mac_id):
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "UPDATE device_incoming SET print_label = '1' WHERE mac_id = ?", (mac_id,))
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+
+    finally:
+        conn.close()
