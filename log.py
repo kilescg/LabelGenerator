@@ -60,20 +60,32 @@ def LogMacID(mac_id, file_path):
 
 def insert_device_incoming(device_incoming):
     global db_path
-    conn = sqlite3.connect(db_path)
-    sql = ''' INSERT INTO device_incoming(mac_id,status,note,print_label,datetime) VALUES(?,?,?,?,?)'''
-    cur = conn.cursor()
-    cur.execute(sql, device_incoming)
-    conn.commit()
-    conn.close()
-    return cur.lastrowid
+    try:
+        conn = sqlite3.connect(db_path)
+        sql = ''' INSERT INTO device_incoming(mac_id,status,note,print_label,datetime) VALUES(?,?,?,?,?)'''
+        cur = conn.cursor()
+        cur.execute(sql, device_incoming)
+        conn.commit()
+        return 1
+    except sqlite3.Error as e:
+        print("SQLite error:", e)
+    finally:
+        if conn:
+            conn.close()
+        return 0
 
 
 def update_print_label_by_mac_id(mac_id):
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
-
-    cursor.execute(
-        "UPDATE device_incoming SET print_label = '1' WHERE mac_id = ?", (mac_id))
-    conn.commit()
-    conn.close()
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute(
+            "UPDATE device_incoming SET print_label = '1' WHERE mac_id = ?", (mac_id,))
+        conn.commit()
+        return 1
+    except sqlite3.Error as e:
+        print("SQLite error:", e)
+    finally:
+        if conn:
+            conn.close()
+        return 0

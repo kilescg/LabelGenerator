@@ -65,11 +65,15 @@ def AddDevice_Event(ui):
     else:
         ui.addDeviceStatusLabel.setText(
             "<span style=\"color:green\">Okay</span></p>")
-    mac_id_list.append(mac_id)
-    log.LogMacID(mac_id[0], "database/devicesLog.csv")
     note = ui.noteLineEdit.text()
     data = (mac_id[0], 'good', note, '0', get_date_time())
-    log.insert_device_incoming(data)
+    res = log.insert_device_incoming(data)
+    if (not res):
+        ui.addDeviceStatusLabel.setText(
+            "<span style=\"color:red\">SQL ERROR (Already Insert)</span></p>")
+    else:
+        mac_id_list.append(mac_id)
+        log.LogMacID(mac_id[0], "database/devicesLog.csv")
     if len(mac_id_list) == 3:
         log.WriteCsv(['macID'], mac_id_list, "database/devices.csv")
         for mac in mac_id_list:
