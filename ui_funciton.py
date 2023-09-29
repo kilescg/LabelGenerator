@@ -52,18 +52,19 @@ def AddDevice_Event(ui):
     global header
     jlink.Power_On()
     mac_id = [jlink.MAC_ID_Check()]
+    global mac_id_test
     is_mac_id_duplicated = mac_id in mac_id_list
     if (mac_id == ['']):
         ui.addDeviceStatusLabel.setText(
-            "<span style=\"color:red\">Cant read mac address</span></p>)")
+            "<span style=\"color:red\">Cant read mac address</span></p>")
         return
     elif (is_mac_id_duplicated):
         ui.addDeviceStatusLabel.setText(
-            "<span style=\"color:red\">mac address is duplicated</span></p>)")
+            "<span style=\"color:red\">mac address is duplicated</span></p>")
         return
     else:
         ui.addDeviceStatusLabel.setText(
-            "<span style=\"color:green\">Okay</span></p>)")
+            "<span style=\"color:green\">Okay</span></p>")
     mac_id_list.append(mac_id)
     log.LogMacID(mac_id[0], "database/devicesLog.csv")
     if len(mac_id_list) == 3:
