@@ -7,7 +7,7 @@ from utils import *
 db_path = "database/DB_sdeautodeploy.db"
 
 
-def WriteCsv(fieldnames, data_list, file_path):
+def write_csv(fieldnames, data_list, file_path):
     # Check if the output file already exists and delete it
     if os.path.exists(file_path):
         os.remove(file_path)

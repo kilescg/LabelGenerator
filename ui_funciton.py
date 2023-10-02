@@ -25,7 +25,7 @@ def flash_event(ui):
 
 
 def flashing_thread_callback(ui):
-    jlink.Power_On()
+    jlink.power_on()
     result = jlink.flash_program(os.path.join(
         "program_files", ui.programFileComboBox.currentText()))
     if result:
@@ -87,7 +87,7 @@ def add_good_device_event(ui):
     log.log_mac_id(mac_id, note, "database/devicesLog.csv")
 
     if len(mac_id_list) == 3:
-        log.WriteCsv(['macID', 'note'], mac_id_list, "database/devices.csv")
+        log.write_csv(['macID', 'note'], mac_id_list, "database/devices.csv")
         for device in mac_id_list:
             log.update_print_label_by_mac_id(device[0])
         mac_id_list = []
@@ -106,6 +106,7 @@ def add_bad_device_event(ui):
     mac_id_list.append(['Faulty', note])
 
     if len(mac_id_list) == 3:
+        log.write_csv(['macID', 'note'], mac_id_list, "database/devices.csv")
         for device in mac_id_list:
             log.update_print_label_by_mac_id(device[0])
         mac_id_list = []
