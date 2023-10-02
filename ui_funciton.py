@@ -6,19 +6,27 @@ from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from utils import *
 
 mac_id_list = []
-header = ["macID"]
+header = ['macId', 'note']
 
 
-def Flash_Event(ui):
-    thr = threading.Thread(target=Flashing_ThreadCallback, args=[ui])
+def power_on_event(ui):
+    jlink.power_on()
+
+
+def power_off_event(ui):
+    jlink.power_off()
+
+
+def flash_event(ui):
+    thr = threading.Thread(target=flashing_thread_callback, args=[ui])
     thr.start()
     ui.flashStatusLabel.setText(
         "Flash Status : <span style=\"color:yellow\">In Progress</span></p>")
 
 
-def Flashing_ThreadCallback(ui):
+def flashing_thread_callback(ui):
     jlink.Power_On()
-    result = jlink.JLink_Program_Flash(os.path.join(
+    result = jlink.flash_program(os.path.join(
         "program_files", ui.programFileComboBox.currentText()))
     if result:
         ui.flashStatusLabel.setText(
@@ -28,7 +36,7 @@ def Flashing_ThreadCallback(ui):
             "Flash Status : <span style=\"color:red\">Fail</span></p>")
 
 
-def ProgramFileComboBoxClick_Event(ui):
+def program_combobox_click_event(ui):
     program_files_folder = "program_files"
 
     # Clear the current items in the combobox
@@ -48,57 +56,106 @@ def ProgramFileComboBoxClick_Event(ui):
                 ui.programFileComboBox.setCurrentText(currentText)
 
 
-def AddDevice_Event(ui):
+def add_good_device_event(ui):
     global mac_id_list
     global header
-    jlink.Power_On()
-    mac_id = [jlink.MAC_ID_Check()]
-    is_mac_id_duplicated = mac_id in mac_id_list
-    if (mac_id == ['']):
+
+    jlink.power_on()
+    mac_id = jlink.mac_id_check()
+
+    if not mac_id:
         ui.addDeviceStatusLabel.setText(
-            "<span style=\"color:red\">Cant read mac address</span></p>")
+            "<span style=\"color:red\">Can't read MAC address</span></p>")
         return
-    elif (is_mac_id_duplicated):
+
+    is_mac_id_duplicated = check_value_in_lists(mac_id_list, mac_id)
+
+    if is_mac_id_duplicated:
         ui.addDeviceStatusLabel.setText(
-            "<span style=\"color:red\">mac address is duplicated</span></p>")
+            "<span style=\"color:red\">MAC address is duplicated</span></p>")
         return
     else:
         ui.addDeviceStatusLabel.setText(
             "<span style=\"color:green\">Okay</span></p>")
+
     note = ui.noteLineEdit.text()
-    data = (mac_id[0], 'good', note, '0', get_date_time())
-    res = log.insert_device_incoming(data)
-    if (not res):
-        ui.addDeviceStatusLabel.setText(
-            "<span style=\"color:red\">SQL ERROR (Already Insert)</span></p>")
-    else:
-        mac_id_list.append(mac_id)
-        log.LogMacID(mac_id[0], "database/devicesLog.csv")
+    timestamp = get_date_time()
+    data = (mac_id, 'good', note, '0', timestamp)
+
+    log.insert_device_incoming(data)
+    mac_id_list.append([mac_id, note])
+    log.log_mac_id(mac_id, note, "database/devicesLog.csv")
+
     if len(mac_id_list) == 3:
-        log.WriteCsv(['macID'], mac_id_list, "database/devices.csv")
-        for mac in mac_id_list:
-            log.update_print_label_by_mac_id(mac[0])
+        log.WriteCsv(['macID', 'note'], mac_id_list, "database/devices.csv")
+        for device in mac_id_list:
+            log.update_print_label_by_mac_id(device[0])
         mac_id_list = []
-    PopulateTableView(ui.devicesTableView, header, mac_id_list)
+
+    ui.noteLineEdit.setText('')
+    populate_table_view(ui.devicesTableView, header, mac_id_list)
 
 
-def ClearList_Event(ui):
+def add_bad_device_event(ui):
+    global mac_id_list
+    global header
+
+    jlink.power_on()
+    mac_id = jlink.mac_id_check()
+
+    if not mac_id:
+        ui.addDeviceStatusLabel.setText(
+            "<span style=\"color:red\">Can't read MAC address</span></p>")
+        return
+
+    is_mac_id_duplicated = check_value_in_lists(mac_id_list, mac_id)
+
+    if is_mac_id_duplicated:
+        ui.addDeviceStatusLabel.setText(
+            "<span style=\"color:red\">MAC address is duplicated</span></p>")
+        return
+    else:
+        ui.addDeviceStatusLabel.setText(
+            "<span style=\"color:green\">Okay</span></p>")
+
+    note = ui.noteLineEdit.text()
+    if note == '':
+        note = 'Faulty'
+    timestamp = get_date_time()
+    data = (mac_id, 'ng', note, '0', timestamp)
+
+    log.insert_device_incoming(data)
+    mac_id_list.append([mac_id, note])
+    log.log_mac_id(mac_id, note, "database/devicesLog.csv")
+
+    if len(mac_id_list) == 3:
+        log.WriteCsv(['macID', 'note'], mac_id_list, "database/devices.csv")
+        for device in mac_id_list:
+            log.update_print_label_by_mac_id(device[0])
+        mac_id_list = []
+
+    ui.noteLineEdit.setText('')
+    populate_table_view(ui.devicesTableView, header, mac_id_list)
+
+
+def clear_list_event(ui):
     global mac_id_list
     mac_id_list = []
-    PopulateTableView(ui.devicesTableView, header, mac_id_list)
+
+    populate_table_view(ui.devicesTableView, header, mac_id_list)
 
 
-def PrintNow_Event(ui):
+def print_now_event(ui):
     global mac_id_list
-    # todo
-    log.WriteCsv(['macID'], mac_id_list, "database/devices.csv")
-    for mac in mac_id_list:
-        log.update_print_label_by_mac_id(mac)
+    log.WriteCsv(['macID', 'note'], mac_id_list, "database/devices.csv")
+    for device in mac_id_list:
+        log.update_print_label_by_mac_id(device[0])  # device 0 equal macId
     mac_id_list = []
-    PopulateTableView(ui.devicesTableView, header, mac_id_list)
+
+    populate_table_view(ui.devicesTableView, header, mac_id_list)
 
 
-def PopulateTableView(tableView, columnHeaders, data):
+def populate_table_view(tableView, columnHeaders, data):
     # Create a model and set it for the table view
     model = QStandardItemModel()
     tableView.setModel(model)

@@ -3,22 +3,26 @@ from PyQt5.QtCore import Qt
 from ui import Ui_MainWindow
 from ui_funciton import *
 import sys
+import os
 
 
 def ConnectUiWithEvent(ui):
-    ui.flashButton.clicked.connect(lambda: Flash_Event(ui))  # done
+    ui.powerOnButton.clicked.connect(lambda: power_on_event(ui))
+    ui.powerOffButton.clicked.connect(lambda: power_off_event(ui))
+    ui.flashButton.clicked.connect(lambda: flash_event(ui))  # done
 
-    ui.addDeviceButton.clicked.connect(lambda: AddDevice_Event(ui))
-    ui.printNowButton.clicked.connect(lambda: PrintNow_Event(ui))
-    ui.clearListButton.clicked.connect(lambda: ClearList_Event(ui))
+    ui.addGoodDeviceButton.clicked.connect(lambda: add_good_device_event(ui))
+    ui.addBadDeviceButton.clicked.connect(lambda: add_bad_device_event(ui))
+    ui.printNowButton.clicked.connect(lambda: print_now_event(ui))
+    ui.clearListButton.clicked.connect(lambda: clear_list_event(ui))
 
 
 def ComboBoxInitialize(ui):
-    ProgramFileComboBoxClick_Event(ui)
+    program_combobox_click_event(ui)
 
 
 def SetTableHeader(ui):
-    PopulateTableView(ui.devicesTableView, header, [])
+    populate_table_view(ui.devicesTableView, header, [])
 
 
 class MyMainWindow(QtWidgets.QMainWindow):
@@ -27,8 +31,20 @@ class MyMainWindow(QtWidgets.QMainWindow):
         self.ui = ui  # Store the ui reference
 
     def keyPressEvent(self, event):
-        if event.key() == Qt.Key_Return:
-            AddDevice_Event(self.ui)
+        if event.key() == Qt.Key_G:
+            add_good_device_event(self.ui)
+        elif event.key() == Qt.Key_B:
+            add_bad_device_event(self.ui)
+        elif event.key() == Qt.Key_F:
+            flash_event(self.ui)
+        elif event.key() == Qt.Key_C:
+            clear_list_event(self.ui)
+        elif event.key() == Qt.Key_P:
+            print_now_event(self.ui)
+        elif event.key() == Qt.Key_Q:
+            power_on_event(self.ui)
+        elif event.key() == Qt.Key_W:
+            power_off_event(self.ui)
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ import os
 import time
 
 
-def MAC_ID_Check():
+def mac_id_check():
     # Define the nrfjprog command you want to run
     command = "nrfjprog --memrd 0x10000060 --n 8 --family nrf52"
     mac_id = ""
@@ -21,7 +21,7 @@ def MAC_ID_Check():
     return mac_id
 
 
-def Power_On():
+def power_on():
     jlink_process = subprocess.Popen(
         "jlink", stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
@@ -40,9 +40,28 @@ def Power_On():
     jlink_process.wait()
 
 
-def JLink_Program_Flash(hex_name):
+def power_off():
+    jlink_process = subprocess.Popen(
+        "jlink", stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+    # Send the "power on" command
+    command = "power off\n"  # Add '\n' to simulate pressing Enter
+    jlink_process.stdin.write(command)
+    jlink_process.stdin.flush()
+
+    # Read the response from J-Link (if needed)
+    output, error = jlink_process.communicate()
+
+    # Close the subprocess
+    jlink_process.stdin.close()
+    jlink_process.stdout.close()
+    jlink_process.stderr.close()
+    jlink_process.wait()
+
+
+def flash_program(hex_name):
     # Define the nrfjprog command you want to run
-    command = f"nrfjprog -f nrf52 --program {hex_name} --sectorerase --verify"
+    command = f"nrfjprog -f nrf52 --program {hex_name} --sectorerase --verify --hardreset"
     is_ok = 0
 
     # Run the command and capture the return code
@@ -63,4 +82,4 @@ def JLink_Program_Flash(hex_name):
 
 if __name__ == "__main__":
     # JLink_Power_On()
-    MAC_ID_Check()
+    pass

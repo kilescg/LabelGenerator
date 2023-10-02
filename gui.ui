@@ -37,14 +37,14 @@
          <item>
           <widget class="QPushButton" name="powerOnButton">
            <property name="text">
-            <string>Power on</string>
+            <string>Power on (Q)</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="powerOffButton">
            <property name="text">
-            <string>Power Off</string>
+            <string>Power Off (W)</string>
            </property>
           </widget>
          </item>
@@ -57,7 +57,7 @@
            <item>
             <widget class="QLabel" name="programFileLabel">
              <property name="text">
-              <string>Select your program file</string>
+              <string>Select your program</string>
              </property>
             </widget>
            </item>
@@ -79,7 +79,7 @@
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>Flash Program</string>
+            <string>Flash Program (F)</string>
            </property>
           </widget>
          </item>
@@ -158,7 +158,7 @@ QPushButton:pressed {
 }</string>
            </property>
            <property name="text">
-            <string>Add Devices (Good)</string>
+            <string>Add Good Devices (G)</string>
            </property>
           </widget>
          </item>
@@ -182,7 +182,7 @@ QPushButton:pressed {
 }</string>
            </property>
            <property name="text">
-            <string>Add Devices (Fail)</string>
+            <string>Add Faulty Devices (B)</string>
            </property>
           </widget>
          </item>
@@ -196,7 +196,7 @@ QPushButton:pressed {
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>Print Now</string>
+            <string>Print Now (P)</string>
            </property>
           </widget>
          </item>
@@ -206,7 +206,7 @@ QPushButton:pressed {
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>Clear</string>
+            <string>Clear (C)</string>
            </property>
           </widget>
          </item>

@@ -29,7 +29,7 @@ def WriteCsv(fieldnames, data_list, file_path):
                 print(f"Skipping invalid data: {inner_list}")
 
 
-def LogMacID(mac_id, file_path):
+def log_mac_id(mac_id, note, file_path):
     # Check if the CSV file exists
     dt_string = get_date_time()
     file_exists = os.path.isfile(file_path)
@@ -46,7 +46,7 @@ def LogMacID(mac_id, file_path):
 
     # Open the CSV file in append mode (or create a new one)
     with open(file_path, 'a', newline='') as csvfile:
-        fieldnames = ['macID', 'timestamp']  # Specify the header field
+        fieldnames = ['macID', 'note', 'timestamp']  # Specify the header field
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         # If the file does not exist, write the header
@@ -55,14 +55,15 @@ def LogMacID(mac_id, file_path):
 
         # Check if the macID already exists, and only write if it's not a duplicate
         if mac_id not in existing_data:
-            writer.writerow({'macID': mac_id, 'timestamp': dt_string})
+            writer.writerow(
+                {'macID': mac_id, 'note': note, 'timestamp': dt_string})
 
 
 def insert_device_incoming(device_incoming):
     global db_path
     try:
         conn = sqlite3.connect(db_path)
-        sql = ''' INSERT INTO device_incoming(mac_id,status,note,print_label,datetime) VALUES(?,?,?,?,?)'''
+        sql = ''' REPLACE INTO device_incoming(mac_id,status,note,print_label,datetime) VALUES(?,?,?,?,?)'''
         cur = conn.cursor()
         cur.execute(sql, device_incoming)
         conn.commit()
