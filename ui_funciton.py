@@ -100,36 +100,12 @@ def add_bad_device_event(ui):
     global mac_id_list
     global header
 
-    jlink.power_on()
-    mac_id = jlink.mac_id_check()
-
-    if not mac_id:
-        ui.addDeviceStatusLabel.setText(
-            "<span style=\"color:red\">Can't read MAC address</span></p>")
-        return
-
-    is_mac_id_duplicated = check_value_in_lists(mac_id_list, mac_id)
-
-    if is_mac_id_duplicated:
-        ui.addDeviceStatusLabel.setText(
-            "<span style=\"color:red\">MAC address is duplicated</span></p>")
-        return
-    else:
-        ui.addDeviceStatusLabel.setText(
-            "<span style=\"color:green\">Okay</span></p>")
-
     note = ui.noteLineEdit.text()
     if note == '':
         note = 'Faulty'
-    timestamp = get_date_time()
-    data = (mac_id, 'ng', note, '0', timestamp)
-
-    log.insert_device_incoming(data)
-    mac_id_list.append([mac_id, note])
-    log.log_mac_id(mac_id, note, "database/devicesLog.csv")
+    mac_id_list.append(['Faulty', note])
 
     if len(mac_id_list) == 3:
-        log.WriteCsv(['macID', 'note'], mac_id_list, "database/devices.csv")
         for device in mac_id_list:
             log.update_print_label_by_mac_id(device[0])
         mac_id_list = []
