@@ -26,13 +26,38 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
+        <widget class="QLabel" name="powerOptionButton">
+         <property name="text">
+          <string>J Link Power Option</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QPushButton" name="powerOnButton">
+           <property name="text">
+            <string>Power on</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="powerOffButton">
+           <property name="text">
+            <string>Power Off</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
             <widget class="QLabel" name="programFileLabel">
              <property name="text">
-              <string>Select Your Hex/Bin File</string>
+              <string>Select your program file</string>
              </property>
             </widget>
            </item>
@@ -51,22 +76,7 @@
          <item>
           <widget class="QPushButton" name="flashButton">
            <property name="styleSheet">
-            <string notr="true">QPushButton {
-    border-radius: 10px; /* Adjust the radius to make the corners more or less rounded */
-    background-color: #3498db; /* Button's normal background color */
-    color: white; /* Button's text color */
-    padding: 5px 5px; /* Adjust padding as needed */
-}
-
-/* Hover state */
-QPushButton:hover {
-    background-color: #2980b9; /* Change background color on hover */
-}
-
-/* Active state (when button is clicked) */
-QPushButton:pressed {
-    background-color: #2070a0; /* Change background color when clicked */
-}</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>Flash Program</string>
@@ -129,49 +139,61 @@ QPushButton:pressed {
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <widget class="QPushButton" name="addDeviceButton">
+          <widget class="QPushButton" name="addGoodDeviceButton">
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    border-radius: 10px; /* Adjust the radius to make the corners more or less rounded */
-    background-color: #3498db; /* Button's normal background color */
-    color: white; /* Button's text color */
-    padding: 5px 0px; /* Adjust padding as needed */
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
 }
 
-/* Hover state */
 QPushButton:hover {
-    background-color: #2980b9; /* Change background color on hover */
+    background-color: #45a049; /* Darker Green */
 }
 
-/* Active state (when button is clicked) */
 QPushButton:pressed {
-    background-color: #2070a0; /* Change background color when clicked */
+    background-color: #357a38; /* Even Darker Green when pressed */
 }</string>
            </property>
            <property name="text">
-            <string>Add Devices</string>
+            <string>Add Devices (Good)</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="printNowButton">
+          <widget class="QPushButton" name="addBadDeviceButton">
            <property name="styleSheet">
             <string notr="true">QPushButton {
-    border-radius: 10px; /* Adjust the radius to make the corners more or less rounded */
-    background-color: #3498db; /* Button's normal background color */
-    color: white; /* Button's text color */
-    padding: 5px 0px; /* Adjust padding as needed */
+    background-color: #f44336; /* Red */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
 }
 
-/* Hover state */
 QPushButton:hover {
-    background-color: #2980b9; /* Change background color on hover */
+    background-color: #d32f2f; /* Darker Red */
 }
 
-/* Active state (when button is clicked) */
 QPushButton:pressed {
-    background-color: #2070a0; /* Change background color when clicked */
+    background-color: #b71c1c; /* Even Darker Red when pressed */
 }</string>
+           </property>
+           <property name="text">
+            <string>Add Devices (Fail)</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QPushButton" name="printNowButton">
+           <property name="styleSheet">
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>Print Now</string>
@@ -181,22 +203,7 @@ QPushButton:pressed {
          <item>
           <widget class="QPushButton" name="clearListButton">
            <property name="styleSheet">
-            <string notr="true">QPushButton {
-    border-radius: 10px; /* Adjust the radius to make the corners more or less rounded */
-    background-color: #3498db; /* Button's normal background color */
-    color: white; /* Button's text color */
-    padding: 5px 0px; /* Adjust padding as needed */
-}
-
-/* Hover state */
-QPushButton:hover {
-    background-color: #2980b9; /* Change background color on hover */
-}
-
-/* Active state (when button is clicked) */
-QPushButton:pressed {
-    background-color: #2070a0; /* Change background color when clicked */
-}</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>Clear</string>
@@ -204,28 +211,6 @@ QPushButton:pressed {
           </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="hotKeyLabel">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string>Press Enter : Add Devices</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>

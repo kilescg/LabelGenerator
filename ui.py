@@ -25,6 +25,18 @@ class Ui_MainWindow(object):
         self.ConsoleGroupBox.setObjectName("ConsoleGroupBox")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.ConsoleGroupBox)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.powerOptionButton = QtWidgets.QLabel(self.ConsoleGroupBox)
+        self.powerOptionButton.setObjectName("powerOptionButton")
+        self.verticalLayout_5.addWidget(self.powerOptionButton)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.powerOnButton = QtWidgets.QPushButton(self.ConsoleGroupBox)
+        self.powerOnButton.setObjectName("powerOnButton")
+        self.horizontalLayout_2.addWidget(self.powerOnButton)
+        self.powerOffButton = QtWidgets.QPushButton(self.ConsoleGroupBox)
+        self.powerOffButton.setObjectName("powerOffButton")
+        self.horizontalLayout_2.addWidget(self.powerOffButton)
+        self.verticalLayout_5.addLayout(self.horizontalLayout_2)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -40,22 +52,7 @@ class Ui_MainWindow(object):
         self.programFileComboBox.setObjectName("programFileComboBox")
         self.verticalLayout_2.addWidget(self.programFileComboBox)
         self.flashButton = QtWidgets.QPushButton(self.ConsoleGroupBox)
-        self.flashButton.setStyleSheet("QPushButton {\n"
-"    border-radius: 10px; /* Adjust the radius to make the corners more or less rounded */\n"
-"    background-color: #3498db; /* Button\'s normal background color */\n"
-"    color: white; /* Button\'s text color */\n"
-"    padding: 5px 5px; /* Adjust padding as needed */\n"
-"}\n"
-"\n"
-"/* Hover state */\n"
-"QPushButton:hover {\n"
-"    background-color: #2980b9; /* Change background color on hover */\n"
-"}\n"
-"\n"
-"/* Active state (when button is clicked) */\n"
-"QPushButton:pressed {\n"
-"    background-color: #2070a0; /* Change background color when clicked */\n"
-"}")
+        self.flashButton.setStyleSheet("")
         self.flashButton.setObjectName("flashButton")
         self.verticalLayout_2.addWidget(self.flashButton)
         self.verticalLayout_5.addLayout(self.verticalLayout_2)
@@ -89,74 +86,54 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.addWidget(self.noteLineEdit)
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.addDeviceButton = QtWidgets.QPushButton(self.ConsoleGroupBox)
-        self.addDeviceButton.setStyleSheet("QPushButton {\n"
-"    border-radius: 10px; /* Adjust the radius to make the corners more or less rounded */\n"
-"    background-color: #3498db; /* Button\'s normal background color */\n"
-"    color: white; /* Button\'s text color */\n"
-"    padding: 5px 0px; /* Adjust padding as needed */\n"
+        self.addGoodDeviceButton = QtWidgets.QPushButton(self.ConsoleGroupBox)
+        self.addGoodDeviceButton.setStyleSheet("QPushButton {\n"
+"    background-color: #4CAF50; /* Green */\n"
+"    color: white;\n"
+"    border: none;\n"
+"    border-radius: 5px;\n"
+"    padding: 10px 20px;\n"
 "}\n"
 "\n"
-"/* Hover state */\n"
 "QPushButton:hover {\n"
-"    background-color: #2980b9; /* Change background color on hover */\n"
+"    background-color: #45a049; /* Darker Green */\n"
 "}\n"
 "\n"
-"/* Active state (when button is clicked) */\n"
 "QPushButton:pressed {\n"
-"    background-color: #2070a0; /* Change background color when clicked */\n"
+"    background-color: #357a38; /* Even Darker Green when pressed */\n"
 "}")
-        self.addDeviceButton.setObjectName("addDeviceButton")
-        self.horizontalLayout_5.addWidget(self.addDeviceButton)
-        self.printNowButton = QtWidgets.QPushButton(self.ConsoleGroupBox)
-        self.printNowButton.setStyleSheet("QPushButton {\n"
-"    border-radius: 10px; /* Adjust the radius to make the corners more or less rounded */\n"
-"    background-color: #3498db; /* Button\'s normal background color */\n"
-"    color: white; /* Button\'s text color */\n"
-"    padding: 5px 0px; /* Adjust padding as needed */\n"
+        self.addGoodDeviceButton.setObjectName("addGoodDeviceButton")
+        self.horizontalLayout_5.addWidget(self.addGoodDeviceButton)
+        self.addBadDeviceButton = QtWidgets.QPushButton(self.ConsoleGroupBox)
+        self.addBadDeviceButton.setStyleSheet("QPushButton {\n"
+"    background-color: #f44336; /* Red */\n"
+"    color: white;\n"
+"    border: none;\n"
+"    border-radius: 5px;\n"
+"    padding: 10px 20px;\n"
 "}\n"
 "\n"
-"/* Hover state */\n"
 "QPushButton:hover {\n"
-"    background-color: #2980b9; /* Change background color on hover */\n"
+"    background-color: #d32f2f; /* Darker Red */\n"
 "}\n"
 "\n"
-"/* Active state (when button is clicked) */\n"
 "QPushButton:pressed {\n"
-"    background-color: #2070a0; /* Change background color when clicked */\n"
+"    background-color: #b71c1c; /* Even Darker Red when pressed */\n"
 "}")
-        self.printNowButton.setObjectName("printNowButton")
-        self.horizontalLayout_5.addWidget(self.printNowButton)
-        self.clearListButton = QtWidgets.QPushButton(self.ConsoleGroupBox)
-        self.clearListButton.setStyleSheet("QPushButton {\n"
-"    border-radius: 10px; /* Adjust the radius to make the corners more or less rounded */\n"
-"    background-color: #3498db; /* Button\'s normal background color */\n"
-"    color: white; /* Button\'s text color */\n"
-"    padding: 5px 0px; /* Adjust padding as needed */\n"
-"}\n"
-"\n"
-"/* Hover state */\n"
-"QPushButton:hover {\n"
-"    background-color: #2980b9; /* Change background color on hover */\n"
-"}\n"
-"\n"
-"/* Active state (when button is clicked) */\n"
-"QPushButton:pressed {\n"
-"    background-color: #2070a0; /* Change background color when clicked */\n"
-"}")
-        self.clearListButton.setObjectName("clearListButton")
-        self.horizontalLayout_5.addWidget(self.clearListButton)
+        self.addBadDeviceButton.setObjectName("addBadDeviceButton")
+        self.horizontalLayout_5.addWidget(self.addBadDeviceButton)
         self.verticalLayout_5.addLayout(self.horizontalLayout_5)
-        self.hotKeyLabel = QtWidgets.QLabel(self.ConsoleGroupBox)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.hotKeyLabel.sizePolicy().hasHeightForWidth())
-        self.hotKeyLabel.setSizePolicy(sizePolicy)
-        self.hotKeyLabel.setMaximumSize(QtCore.QSize(16777215, 20))
-        self.hotKeyLabel.setStyleSheet("")
-        self.hotKeyLabel.setObjectName("hotKeyLabel")
-        self.verticalLayout_5.addWidget(self.hotKeyLabel)
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.printNowButton = QtWidgets.QPushButton(self.ConsoleGroupBox)
+        self.printNowButton.setStyleSheet("")
+        self.printNowButton.setObjectName("printNowButton")
+        self.horizontalLayout_4.addWidget(self.printNowButton)
+        self.clearListButton = QtWidgets.QPushButton(self.ConsoleGroupBox)
+        self.clearListButton.setStyleSheet("")
+        self.clearListButton.setObjectName("clearListButton")
+        self.horizontalLayout_4.addWidget(self.clearListButton)
+        self.verticalLayout_5.addLayout(self.horizontalLayout_4)
         self.verticalLayout.addWidget(self.ConsoleGroupBox)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -174,16 +151,19 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.ConsoleGroupBox.setTitle(_translate("MainWindow", "Console"))
-        self.programFileLabel.setText(_translate("MainWindow", "Select Your Hex/Bin File"))
+        self.powerOptionButton.setText(_translate("MainWindow", "J Link Power Option"))
+        self.powerOnButton.setText(_translate("MainWindow", "Power on"))
+        self.powerOffButton.setText(_translate("MainWindow", "Power Off"))
+        self.programFileLabel.setText(_translate("MainWindow", "Select your program file"))
         self.flashStatusLabel.setText(_translate("MainWindow", "Flash Status : None"))
         self.flashButton.setText(_translate("MainWindow", "Flash Program"))
         self.devicesLabel.setText(_translate("MainWindow", "Devices for Label Printing"))
         self.statusLabel.setText(_translate("MainWindow", "status :"))
         self.label.setText(_translate("MainWindow", "Note (Optional)"))
-        self.addDeviceButton.setText(_translate("MainWindow", "Add Devices"))
+        self.addGoodDeviceButton.setText(_translate("MainWindow", "Add Devices (Good)"))
+        self.addBadDeviceButton.setText(_translate("MainWindow", "Add Devices (Fail)"))
         self.printNowButton.setText(_translate("MainWindow", "Print Now"))
         self.clearListButton.setText(_translate("MainWindow", "Clear"))
-        self.hotKeyLabel.setText(_translate("MainWindow", "Press Enter : Add Devices"))
 
 
 if __name__ == "__main__":
