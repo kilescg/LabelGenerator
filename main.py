@@ -7,8 +7,8 @@ import os
 
 
 def ConnectUiWithEvent(ui):
-    ui.powerOnButton.clicked.connect(lambda: power_on_event(ui))
-    ui.powerOffButton.clicked.connect(lambda: power_off_event(ui))
+    ui.powerOnButton.clicked.connect(lambda: power_on_event())
+    ui.powerOffButton.clicked.connect(lambda: power_off_event())
     ui.flashButton.clicked.connect(lambda: flash_event(ui))  # done
 
     ui.addGoodDeviceButton.clicked.connect(lambda: add_good_device_event(ui))

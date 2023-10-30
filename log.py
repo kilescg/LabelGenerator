@@ -1,10 +1,13 @@
 import csv
 import os
-import sqlite3
+import mysql.connector
 from datetime import datetime
 from utils import *
 
-db_path = "database/DB_sdeautodeploy.db"
+db_host = "127.0.0.1"
+db_user = "root"
+db_password = "password"
+db_name = "db_sde"
 
 
 def write_csv(fieldnames, data_list, file_path):
@@ -59,34 +62,41 @@ def log_mac_id(mac_id, note, file_path):
                 {'macID': mac_id, 'note': note, 'timestamp': dt_string})
 
 
-def insert_device_incoming(device_incoming):
-    global db_path
+def insert_child_device(device_incoming):
     try:
-        conn = sqlite3.connect(db_path)
-        sql = ''' REPLACE INTO device_incoming(mac_id,status,note,print_label,datetime) VALUES(?,?,?,?,?)'''
-        cur = conn.cursor()
-        cur.execute(sql, device_incoming)
+        conn = mysql.connector.connect(
+            host=db_host, user=db_user, password=db_password, database=db_name)
+        cursor = conn.cursor()
+
+        # Define the SQL query with placeholders
+        sql = '''INSERT INTO child_device (child_id, print_label, datetime, note) VALUES (%s, %s, %s, %s)'''
+
+        # Execute the SQL query with the data
+        cursor.execute(sql, device_incoming)
+
+        # Commit the changes to the database
         conn.commit()
+        conn.close()
+        cursor.close()
         return 1
-    except sqlite3.Error as e:
-        print("SQLite error:", e)
-    finally:
-        if conn:
-            conn.close()
+    except mysql.connector.Error as e:
+        print("MySQL error:", e)
         return 0
 
 
 def update_print_label_by_mac_id(mac_id):
     try:
-        conn = sqlite3.connect(db_path)
+        conn = mysql.connector.connect(
+            host=db_host,
+            user=db_user,
+            password=db_password,
+            database=db_name
+        )
         cursor = conn.cursor()
-        cursor.execute(
-            "UPDATE device_incoming SET print_label = '1' WHERE mac_id = ?", (mac_id,))
+        update_query = "UPDATE child_device SET print_label = '1' WHERE child_id = %s"
+        cursor.execute(update_query, (mac_id,))
         conn.commit()
+        conn.close()
         return 1
-    except sqlite3.Error as e:
-        print("SQLite error:", e)
-    finally:
-        if conn:
-            conn.close()
-        return 0
+    except mysql.connector.Error as e:
+        print("MySQL error:", e)
