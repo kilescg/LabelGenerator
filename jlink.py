@@ -6,7 +6,7 @@ import time
 
 def mac_id_check():
     # Define the nrfjprog command you want to run
-    command = "nrfjprog --memrd 0x10000060 --n 8 --family nrf52  --pinresetenable"
+    command = "nrfjprog --memrd 0x10000060 --n 8 --family nrf52"
     mac_id = ""
 
     # Run the command and capture the return code
@@ -61,7 +61,7 @@ def power_off():
 
 def flash_program(hex_name):
     # Define the nrfjprog command you want to run
-    command = f"nrfjprog -f nrf52 --program {hex_name} --sectorerase --verify --hardreset"
+    command = f"nrfjprog -f nrf52 --program {hex_name} --sectorerase --verify --hardreset --pinresetenable"
     is_ok = 0
 
     # Run the command and capture the return code
