@@ -6,7 +6,7 @@ import time
 
 def mac_id_check():
     # Define the nrfjprog command you want to run
-    command = "nrfjprog --memrd 0x10000060 --n 8 --family nrf52"
+    command = "nrfjprog --memrd 0x10000060 --n 8 --family nrf52  --pinresetenable"
     mac_id = ""
 
     # Run the command and capture the return code
