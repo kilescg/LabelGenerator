@@ -60,8 +60,13 @@ def power_off():
 
 
 def flash_program(hex_name):
+    erase_command = 'nrfjprog -e'
+    result = subprocess.run(
+        erase_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
     # Define the nrfjprog command you want to run
-    command = f"nrfjprog -f nrf52 --program {hex_name} --sectorerase --verify --hardreset --pinresetenable"
+    command = f"nrfjprog -f nrf52 --program ./{hex_name} --verify --hardreset"
+
     is_ok = 0
 
     # Run the command and capture the return code
